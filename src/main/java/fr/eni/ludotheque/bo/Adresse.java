@@ -1,13 +1,19 @@
 package fr.eni.ludotheque.bo;
 
-import lombok.Data;
+import lombok.*;
 
 @Data
+@NoArgsConstructor
+@RequiredArgsConstructor
 public class Adresse {
 
-    private int no_adresse;
-    private String rue;
-    private int code_postale;
-    private String ville;
-    private Client client;
+    @EqualsAndHashCode.Exclude
+    private Integer no_adresse;
+
+    @NonNull private String rue;
+
+    @NonNull private int code_postale;
+
+    @NonNull private String ville;
+
 }
