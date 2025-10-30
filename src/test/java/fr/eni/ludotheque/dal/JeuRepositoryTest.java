@@ -2,6 +2,7 @@ package fr.eni.ludotheque.dal;
 
 import fr.eni.ludotheque.bo.Genre;
 import fr.eni.ludotheque.bo.Jeu;
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ public class JeuRepositoryTest {
 	
 	@Test
 	@DisplayName("test création jeu et liens vers genres CAS POSITIF")
-	//@Transactional
+	@Transactional
 	public void testCreationJeu() {
 		//Arrange
 		Jeu jeu = new Jeu("SkyJo", "refSkyJo", 5.6f );
