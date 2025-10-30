@@ -3,9 +3,9 @@ spring:
     name: ludotheque
 
   datasource:
-    url: jdbc:sqlserver://localhost;databasename=LUDO_DB;encrypt=false
-    username: LUDO_USER
-    password: LUDO_PWD
+    url: jdbc:postgresql://localhost:5432/LUDO_DB
+    username: postgres
+    password: Pa$$w0rd
   jpa:
     show-sql: true
     properties:

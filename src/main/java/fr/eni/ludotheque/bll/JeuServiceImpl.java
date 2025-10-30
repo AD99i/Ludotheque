@@ -3,6 +3,7 @@ package fr.eni.ludotheque.bll;
 import java.util.List;
 import java.util.Optional;
 
+import fr.eni.ludotheque.bo.Exemplaire;
 import org.springframework.stereotype.Service;
 
 import fr.eni.ludotheque.bo.Jeu;
@@ -54,6 +55,11 @@ public class JeuServiceImpl implements JeuService{
 		return jeux;
 	}
 
-	
+    public Jeu findJeuByCodeBarre(String codeBarre) {
+
+        Exemplaire exemplaire = exemplaireRepository.findByCodebarre(codeBarre);
+        Jeu jeu = exemplaire.getJeu();
+        return jeu;
+    }
 
 }

@@ -11,5 +11,7 @@ public interface JeuService {
 	Jeu trouverJeuParNoJeu(Integer noJeu);
 	
 	List<Jeu> listeJeuxCatalogue(String filtreTitre);
+
+    public Jeu findJeuByCodeBarre(String codeBarre);
 		
 }
