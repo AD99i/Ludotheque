@@ -1,22 +1,37 @@
 package fr.eni.ludotheque.bo;
 
-import lombok.*;
+import jakarta.persistence.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
 @Data
 @NoArgsConstructor
 @RequiredArgsConstructor
+@Entity
+@Table(name="CLIENTS")
 public class Client {
+	@Id
+	@GeneratedValue()
+	private Integer noClient;
+	
+	@Column(length = 50, nullable = false)
+	@NonNull private String nom;
+	
+	@Column(length = 50, nullable = false)
+	@NonNull private String prenom;
+	
+	@Column(length = 50, nullable = false, unique = true)
+	@NonNull private String email;
+	
+	@Column(length = 15, nullable = false)
+	private String noTelephone;
 
-    @EqualsAndHashCode.Exclude
-    private  Integer no_client;
-
-    @NonNull private String nom;
-
-    @NonNull private String prenom;
-
-    @NonNull private String email;
-
-    private int no_telephone;
-
-    @NonNull private Adresse adresse;
+	@NonNull
+	@OneToOne(cascade = CascadeType.ALL,
+			orphanRemoval = true, optional = false,
+			fetch = FetchType.EAGER)
+	@JoinColumn(name = "no_adresse")
+	private Adresse adresse;
 }
