@@ -1,9 +1,14 @@
 package fr.eni.ludotheque.bll;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import fr.eni.ludotheque.bo.Exemplaire;
+import fr.eni.ludotheque.bo.Genre;
+import fr.eni.ludotheque.dal.GenreRepository;
+import fr.eni.ludotheque.dto.JeuDTO;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import fr.eni.ludotheque.bo.Jeu;
@@ -21,7 +26,10 @@ public class JeuServiceImpl implements JeuService{
 	
 	@NonNull
 	private ExemplaireRepository exemplaireRepository;
-	
+
+	@NonNull
+	private GenreRepository genreRepository;
+
 	@Override
 	public void ajouterJeu(Jeu jeu) {
 		
@@ -48,18 +56,39 @@ public class JeuServiceImpl implements JeuService{
 		List<Jeu> jeux = jeuRepository.findAllJeuxAvecNbExemplaires(filtreTitre);
 		
 		for(Jeu jeu : jeux) {
-			int nbExemplairesDisponibles = exemplaireRepository.nbExemplairesDisponibleByNoJeu(jeu.getNoJeu());
-			jeu.setNbExemplairesDisponibles(nbExemplairesDisponibles);
+			jeu.setNbExemplairesDisponibles(exemplaireRepository.nbExemplairesDisponibleByNoJeu(jeu.getNoJeu()));
 		}
-		
+
 		return jeux;
 	}
 
-    public Jeu findJeuByCodeBarre(String codeBarre) {
+	@Override
+	public List<Jeu> listeJeuxCatalogueV2(String filtreTitre) {
+		List<JeuDTO> jeuxDTO = jeuRepository.findAllJeuxAvecNbExemplairesV2(filtreTitre);
+		List<Jeu> jeux = new ArrayList<>();
 
-        Exemplaire exemplaire = exemplaireRepository.findByCodebarre(codeBarre);
-        Jeu jeu = exemplaire.getJeu();
-        return jeu;
-    }
+		List<Genre> genres = null;
+		for(JeuDTO dto : jeuxDTO){
+			Jeu jeu = new Jeu();
+			BeanUtils.copyProperties(dto, jeu);
+			jeu.setGenres(genreRepository.findGenresByNoJeu(dto.getNoJeu()));
+			jeux.add(jeu);
+		}
+
+		return jeux;
+	}
+
+	@Override
+	public Exemplaire trouverExemplaireByCodebarre(String codebarre) {
+
+		Exemplaire exemplaire = exemplaireRepository.findByCodebarre(codebarre);
+
+		if(exemplaire==null){
+			throw new DataNotFound("Exemplaire",codebarre);
+		}
+
+		return exemplaire;
+	}
+
 
 }

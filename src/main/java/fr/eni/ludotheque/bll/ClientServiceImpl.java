@@ -8,6 +8,7 @@ import fr.eni.ludotheque.dto.AdresseDTO;
 import fr.eni.ludotheque.dto.ClientDTO;
 import fr.eni.ludotheque.exceptions.DataNotFound;
 import fr.eni.ludotheque.exceptions.EmailClientAlreadyExistException;
+import jakarta.validation.Valid;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
@@ -27,7 +28,7 @@ public class ClientServiceImpl implements ClientService{
 	private AdresseRepository adresseRepository;
 	
 	@Override
-	public Client ajouterClient(ClientDTO clientDto)  {
+	public Client ajouterClient( ClientDTO clientDto)  {
 
 		Client client = new Client();
 		Adresse adresse = new Adresse();
@@ -92,8 +93,14 @@ public class ClientServiceImpl implements ClientService{
 
 	}
 
-    @Override
-    public void supprimerClient(Integer id) {
-        clientRepository.deleteById(id);
-    }
+	@Override
+	public void supprimerClient(int noClient) {
+
+		try {
+			clientRepository.deleteById(noClient);
+		}catch (OptimisticLockingFailureException exc){
+			throw new DataNotFound("Client", noClient);
+		}
+	}
+
 }

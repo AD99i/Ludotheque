@@ -1,5 +1,6 @@
 package fr.eni.ludotheque.bll;
 
+import fr.eni.ludotheque.bo.Exemplaire;
 import fr.eni.ludotheque.bo.Jeu;
 
 import java.util.List;
@@ -12,6 +13,8 @@ public interface JeuService {
 	
 	List<Jeu> listeJeuxCatalogue(String filtreTitre);
 
-    public Jeu findJeuByCodeBarre(String codeBarre);
+	List<Jeu> listeJeuxCatalogueV2(String filtreTitre);
+
+	Exemplaire trouverExemplaireByCodebarre(String codebarre);
 		
 }

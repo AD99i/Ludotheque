@@ -39,7 +39,7 @@ public class Jeu {
 	private Float tarifJour;
 
 	@Transient
-	private int nbExemplairesDisponibles;
+	private Integer nbExemplairesDisponibles;
 	
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "JEUX_GENRES", 

@@ -18,6 +18,5 @@ public interface ClientService {
 
 	public Client modifierAdresse(Integer noClient, AdresseDTO adresseDto) ;
 
-    public void supprimerClient(Integer id);
-
+	void supprimerClient(int noClient);
 }

@@ -59,10 +59,14 @@ public class LocationServiceImpl implements LocationService{
 		for(String codebarre : codebarres) {
 			location = locationRepository.findLocationByCodebarreWithJeu(codebarre);
 			location.setDateRetour(LocalDateTime.now());
+
+			locationRepository.save(location);
+
 			facture.addLocation(location);
-			//TODO : save date retour 
+
 			long nbJours = ChronoUnit.DAYS.between(location.getDateDebut(), location.getDateRetour()) +1;
 			prix += (nbJours * location.getTarifJour());
+
 		}
 		facture.setPrix(prix);
         return factureRepository.save(facture);
