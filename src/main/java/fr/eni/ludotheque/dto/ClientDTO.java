@@ -1,5 +1,8 @@
 package fr.eni.ludotheque.dto;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,12 +11,19 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ClientDTO {
+    @NotBlank
+    @Size(min = 1, max = 20)
     private String nom;
+    @Size(min = 1, max = 20)
     private String prenom;
+    @Email
     private String email;
     private String noTelephone;
 
+    @NotBlank
     private String rue;
+    @NotBlank
     private String codePostal;
+    @NotBlank
     private String ville;
 }

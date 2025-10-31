@@ -4,11 +4,8 @@ import fr.eni.ludotheque.bll.JeuService;
 import fr.eni.ludotheque.bo.Jeu;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -17,21 +14,25 @@ import java.util.List;
 public class JeuRestController {
 
     @NonNull
-    private JeuService jeuService;
+    private final JeuService jeuService;
 
     @GetMapping("/jeux")
-    public ResponseEntity<List<Jeu>> listeJeu() {
-        List<Jeu> listejeu = jeuService.listeJeuxCatalogue("");
-        return ResponseEntity.ok().body(listejeu);
+    public ResponseEntity<ApiResponse<List<Jeu>>> listeJeu() {
+        List<Jeu> listeJeux = jeuService.listeJeuxCatalogue("");
+        ApiResponse<List<Jeu>> response = new ApiResponse<>(true, "Liste des jeux récupérée", listeJeux);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/jeux/{codeBarre}")
-    public ResponseEntity<?> getJeu(@PathVariable("codeBarre") String codeBarre) {
+    public ResponseEntity<ApiResponse<Jeu>> getJeu(@PathVariable("codeBarre") String codeBarre) {
         Jeu jeu = jeuService.findJeuByCodeBarre(codeBarre);
-        return ResponseEntity.ok().body(jeu);
 
+        if (jeu != null) {
+            ApiResponse<Jeu> response = new ApiResponse<>(true, "Jeu trouvé", jeu);
+            return ResponseEntity.ok(response);
+        } else {
+            ApiResponse<Jeu> response = new ApiResponse<>(false, "Jeu non trouvé", null);
+            return ResponseEntity.status(404).body(response);
+        }
     }
-
-
 }
-
