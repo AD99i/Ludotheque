@@ -62,7 +62,7 @@ public class ClientRestController {
     }
 
 
-    @GetMapping
+    @GetMapping()
     public ResponseEntity<ApiResponse<List<Client>>> findClientsByNomCommencePar(@RequestParam(required = false, defaultValue = "") String filtreNom) {
         List<Client> clientList = clientService.trouverClientsParNom(filtreNom);
         String message = clientList.size() > 0 ? "ok" : "aucun client trouvé";
