@@ -4,7 +4,7 @@ spring:
   config:
     import: optional:file:./secrets.yml
   datasource:
-    url: jdbc:postgresql://localhost/LUDO_DB
+    url: ${db.url}
     username: ${db.username}
     password: ${db.password}
     #driver-class-name: org.postgresql.Driver
@@ -18,3 +18,5 @@ spring:
       ddl-auto: create
 
 
+JWT:
+  secret: 357638792F423F4428472B4B6250655368566D597133743677397A2443264629

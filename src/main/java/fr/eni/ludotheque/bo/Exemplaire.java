@@ -10,7 +10,7 @@ import lombok.*;
 @Table(name="EXEMPLAIRES")
 public class Exemplaire {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@EqualsAndHashCode.Exclude
 	private Integer noExemplaire;
 	

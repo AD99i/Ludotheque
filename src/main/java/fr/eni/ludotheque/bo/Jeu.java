@@ -14,7 +14,7 @@ import java.util.List;
 @Table(name="JEUX")
 public class Jeu {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name="no_jeu")
 	private Integer noJeu;
 	

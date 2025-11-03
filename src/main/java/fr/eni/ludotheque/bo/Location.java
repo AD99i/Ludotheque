@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Table(name = "LOCATIONS")
 public class Location {
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE)
 	private Integer noLocation;
 
 	@EqualsAndHashCode.Include
